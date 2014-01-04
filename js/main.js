@@ -34,7 +34,7 @@ DrawableObject.prototype.loop = function(ctx, x, y, w, h, vx, vy){
 	var i=0;
 	var a = setInterval( function() {
 		ctx.drawImage(this.image, x + vx*i, y + vy*i, w, h);
-		if(Math.abs(vx*i) > w) {
+		if(Math.abs(vx*i) > w || Math.abs(vy*i) > h) {
 			i = 0;
 		} else {
 			i += 2;
