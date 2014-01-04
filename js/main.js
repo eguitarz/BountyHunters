@@ -28,12 +28,26 @@ DrawableObject.prototype.paint = function(ctx, x, y, w, h){
 		ctx.putImageData(d, x, y, 0, 0, w, h);
 		ctx.restore();
 	}.bind(this);
-}
+};
+DrawableObject.prototype.loop = function(ctx, x, y, w, h, vx, vy){
+	ctx.save();
+	var i=0;
+	var a = setInterval( function() {
+		ctx.drawImage(this.image, x + vx*i, y + vy*i, w, h);
+		if(Math.abs(vx*i) > w) {
+			i = 0;
+		} else {
+			i += 2;
+		}
+	}.bind(this), 33);
+	ctx.restore();
+};
 
 var h = new DrawableObject('img/hunter.png');
 var bg = new DrawableObject('img/bg.png');
 
-bg.draw(ctx, 0, 0, ctx.canvas.width, ctx.canvas.height);
+bg.loop(ctx, 0, 0, ctx.canvas.width, ctx.canvas.height, -1, 0);
+bg.loop(ctx, ctx.canvas.width, 0, ctx.canvas.width, ctx.canvas.height, -1, 0);
 canvas = document.getElementById('player');
 ctx = canvas.getContext('2d');
 ctx.canvas.width  = window.innerWidth;
