@@ -1,7 +1,7 @@
 function DrawableObject(src) {
 	this.image = new Image;
 	this.image.src = src;
-	this.x = this.y = 0;
+	this.x = this.y = 0 = this.width = this.height;
 };
 DrawableObject.prototype.draw = function(ctx, x, y, w, h){
 	this.image.onload = function() {
@@ -9,6 +9,8 @@ DrawableObject.prototype.draw = function(ctx, x, y, w, h){
 		ctx.drawImage(this.image, x, y, w, h);
 		this.x = x;
 		this.y = y;
+		this.width = w;
+		this.height = h;
 		ctx.restore();
 	}.bind(this);
 }
@@ -16,6 +18,10 @@ DrawableObject.prototype.paint = function(ctx, x, y, w, h){
 	this.image.onload = function() {
 		ctx.save();
 		ctx.drawImage(this.image, x, y, w, h);
+		this.x = x;
+		this.y = y;
+		this.width = w;
+		this.height = h;
 		var d = ctx.getImageData(x, y, w, h);
 		for(var i=0; i<d.data.length; i+=4) {
 			if (d.data[i] === 255 && d.data[i+1] === 255 && d.data[i+2] === 255) {
