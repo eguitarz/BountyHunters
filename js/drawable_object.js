@@ -8,18 +8,6 @@ function DrawableObject(src, w, h) {
 	}
 	this.x = this.y = 0;
 };
-DrawableObject.prototype.draw = function(ctx, x, y, w, h){
-	// this.image.onload = function() {
-	ctx.save();
-	// ctx.clearRect(x,y,w,h);
-	ctx.drawImage(this.image, x, y, w, h);
-	this.x = x;
-	this.y = y;
-	this.width = w;
-	this.height = h;
-	ctx.restore();
-	// }.bind(this);
-}
 DrawableObject.prototype.paint = function(ctx){
 	ctx.save();
 	ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
