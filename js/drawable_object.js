@@ -1,20 +1,32 @@
-function DrawableObject(src) {
-	this.image = new Image;
+function DrawableObject(src, w, h) {
+	var self = this
+	this.image = new Image(w, h);
 	this.image.src = src;
-	this.x = this.y = this.width = this.height = 0;
+	this.image.onload = function() {
+		self.width = this.width;
+		self.height = this.height;
+	}
+	this.x = this.y = 0;
 };
 DrawableObject.prototype.draw = function(ctx, x, y, w, h){
-	this.image.onload = function() {
-		ctx.save();
-		ctx.drawImage(this.image, x, y, w, h);
-		this.x = x;
-		this.y = y;
-		this.width = w;
-		this.height = h;
-		ctx.restore();
-	}.bind(this);
+	// this.image.onload = function() {
+	ctx.save();
+	// ctx.clearRect(x,y,w,h);
+	ctx.drawImage(this.image, x, y, w, h);
+	this.x = x;
+	this.y = y;
+	this.width = w;
+	this.height = h;
+	ctx.restore();
+	// }.bind(this);
 }
-DrawableObject.prototype.paint = function(ctx, x, y, w, h){
+DrawableObject.prototype.paint = function(ctx){
+	ctx.save();
+	ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+	ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+	ctx.restore();
+}
+DrawableObject.prototype._paint = function(ctx, x, y, w, h){
 	// this.image.onload = function() {
 	setTimeout( function() {
 		ctx.save();
@@ -31,18 +43,18 @@ DrawableObject.prototype.paint = function(ctx, x, y, w, h){
 		}
 		ctx.putImageData(d, x, y, 0, 0, w, h);
 		ctx.restore();
-	}.bind(this), 33);
+	}.bind(this), 300);
 	// }.bind(this);
 };
-DrawableObject.prototype.loop = function(ctx, x, y, w, h, vx, vy){
+DrawableObject.prototype.loop = function(ctx, vx, vy){
 	ctx.save();
-	var i=0;
 	var a = setInterval( function() {
-		ctx.drawImage(this.image, x + vx*i, y + vy*i, w, h);
-		if(Math.abs(vx*i) > w || Math.abs(vy*i) > h) {
-			i = 0;
-		} else {
-			i += 2;
+		this.x = this.x + vx;
+		this.y = this.y + vy;
+		ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+		if(this.x < -this.width) {
+			this.x = this.width;
+			this.y = 0;
 		}
 	}.bind(this), 33);
 	ctx.restore();
