@@ -14,22 +14,22 @@ player_ctx.canvas.height = window.innerHeight;
 h.paint(player_ctx, 200, window.innerHeight - 180, 48, 64);
 
 // functions
-function movePlayer(vx, vy) {
-
+function move(ctx, obj, vx, vy) {
+	var x = obj.x,
+			y = obj.y,
+			w = obj.width,
+			h = obj.height;
+	obj.paint(ctx, x + vx, y + vy, w, h);
 }
 function onKeydown(e) {
 	if (e.keyCode === 37) {
-		console.log('left');
-		movePlayer(-1, 0);
+		move(player_ctx, h, -10, 0);
 	} else if (e.keyCode === 38) {
-		console.log('up');
-		movePlayer(0, -1);
+		move(player_ctx, h, 0, -10);
 	} else if (e.keyCode === 39) {
-		console.log('right');
-		movePlayer(1, 0);
+		move(player_ctx, h, 10, 0);
 	} else if (e.keyCode === 40) {
-		console.log('down');
-		movePlayer(0, 1);
+		move(player_ctx, h, 0, 10);
 	}
 }
 

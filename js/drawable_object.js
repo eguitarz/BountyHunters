@@ -1,7 +1,7 @@
 function DrawableObject(src) {
 	this.image = new Image;
 	this.image.src = src;
-	this.x = this.y = 0 = this.width = this.height;
+	this.x = this.y = this.width = this.height = 0;
 };
 DrawableObject.prototype.draw = function(ctx, x, y, w, h){
 	this.image.onload = function() {
@@ -15,7 +15,8 @@ DrawableObject.prototype.draw = function(ctx, x, y, w, h){
 	}.bind(this);
 }
 DrawableObject.prototype.paint = function(ctx, x, y, w, h){
-	this.image.onload = function() {
+	// this.image.onload = function() {
+	setTimeout( function() {
 		ctx.save();
 		ctx.drawImage(this.image, x, y, w, h);
 		this.x = x;
@@ -30,7 +31,8 @@ DrawableObject.prototype.paint = function(ctx, x, y, w, h){
 		}
 		ctx.putImageData(d, x, y, 0, 0, w, h);
 		ctx.restore();
-	}.bind(this);
+	}.bind(this), 33);
+	// }.bind(this);
 };
 DrawableObject.prototype.loop = function(ctx, x, y, w, h, vx, vy){
 	ctx.save();
