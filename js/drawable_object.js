@@ -2,6 +2,7 @@ function DrawableObject(src, w, h) {
 	var self = this
 	this.image = new Image(w, h);
 	this.image.src = src;
+	this.stopLoop = null;
 	this.image.onload = function() {
 		self.width = this.width;
 		self.height = this.height;
@@ -16,7 +17,9 @@ DrawableObject.prototype.paint = function(ctx){
 }
 DrawableObject.prototype.loop = function(ctx, vx, vy){
 	ctx.save();
-	var a = setInterval( function() {
+	var draw;
+	(draw = function() {
+		if (this.stopLoop) return;
 		this.x = this.x + vx;
 		this.y = this.y + vy;
 		ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
@@ -24,6 +27,7 @@ DrawableObject.prototype.loop = function(ctx, vx, vy){
 			this.x = this.width;
 			this.y = 0;
 		}
-	}.bind(this), 33);
+		drawHandler = setTimeout( draw, 33);
+	}.bind(this) )();
 	ctx.restore();
 };
