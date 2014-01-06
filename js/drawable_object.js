@@ -1,12 +1,14 @@
 function DrawableObject(src) {
 	this.image = new Image;
 	this.image.src = src;
+	this.x = this.y = 0;
 };
-DrawableObject.prototype = new Image;
 DrawableObject.prototype.draw = function(ctx, x, y, w, h){
 	this.image.onload = function() {
 		ctx.save();
 		ctx.drawImage(this.image, x, y, w, h);
+		this.x = x;
+		this.y = y;
 		ctx.restore();
 	}.bind(this);
 }
