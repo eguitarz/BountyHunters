@@ -27,13 +27,6 @@ hunter.x = 200;
 hunter.y = window.innerHeight - 180;
 
 var drawPlayer;
-// (drawPlayer = function() {
-// 	hunter.paint(player_ctx);
-// 	setTimeout( function() {
-// 		drawPlayer.call();
-// 	}, 33);
-// })();
-// h.paint(player_ctx, 200, window.innerHeight - 180, 48, 64);
  
 function RenderQueue() {
 	this.stop = false;
@@ -43,7 +36,11 @@ RenderQueue.prototype.push = function(drawableObject) {
 	this.queue.push(drawableObject);
 };
 RenderQueue.prototype.remove = function(drawableObject) {
-	this.queue.remove(drawableObject);
+	q = this.queue;
+	var idx = q.indexOf(drawableObject);
+	if (idx >= 0) {
+		q.splice(idx, 1);
+	}
 };
 RenderQueue.prototype.run = function() {
 	var routine;
@@ -66,6 +63,21 @@ queue.run();
 function move(obj, vx, vy) {
 	obj.x = obj.x + vx,
 	obj.y = obj.y + vy;
+}
+function trigger(queue, owner, weapon, vx, vy) {
+	weapon.x = owner.x;
+	weapon.y = owner.y;
+	queue.push(weapon);
+	var moveWeapon;
+	(moveWeapon = function() {
+		weapon.x = weapon.x + vx;
+		weapon.y = weapon.y + vy;
+		if (weapon.x > window.innerWidth || weapon.x < weapon.width || weapon.y > window.innerHeight ||  weapon.y < weapon.height) {
+			queue.remove(weapon);
+			return;
+		}
+		setTimeout( moveWeapon, 33);
+	})();
 }
 function fire(owner, weapon, vx, vy) {
 	weapon.x = owner.x;
@@ -92,7 +104,8 @@ function onKeydown(e) {
 	// fire weapon whilst pressed space
 	if (e.keyCode === 32) {
 		dagger = new DrawableObject('img/dagger.gif', weapon_ctx, 30, 12);
-		fire(hunter, dagger, 20, 0);
+		trigger(queue, hunter, dagger, 20, 0);
+		trigger(queue, hunter, dagger, 30, 0);
 	}
 }
 
