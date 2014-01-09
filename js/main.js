@@ -2,7 +2,7 @@ var bg_canvas = document.getElementById('background'),
 		bg_ctx = bg_canvas && bg_canvas.getContext('2d'),
 		player_canvas = document.getElementById('player'),
 		player_ctx = player_canvas.getContext('2d'),
-		h = new DrawableObject('img/hunter.png', 48, 64),
+		hunter = new DrawableObject('img/hunter.png', 48, 64),
 		weapon_canvas = document.getElementById('weapon'),
 		weapon_ctx = weapon_canvas.getContext('2d'),
 		bg1 = new DrawableObject('img/bg.png', window.innerWidth, window.innerHeight);
@@ -23,12 +23,12 @@ if (weapon_ctx) {
 	weapon_ctx.canvas.width  = window.innerWidth;
 	weapon_ctx.canvas.height = window.innerHeight;
 }
-h.x = 200;
-h.y = window.innerHeight - 180;
+hunter.x = 200;
+hunter.y = window.innerHeight - 180;
 
 var drawPlayer;
 (drawPlayer = function() {
-	h.paint(player_ctx);
+	hunter.paint(player_ctx);
 	setTimeout( function() {
 		drawPlayer.call();
 	}, 33);
@@ -54,18 +54,18 @@ function fire(owner, weapon, vx, vy) {
 }
 function onKeydown(e) {
 	if (e.keyCode === 37) {
-		move(h, -10, 0);
+		move(hunter, -10, 0);
 	} else if (e.keyCode === 38) {
-		move(h, 0, -10);
+		move(hunter, 0, -10);
 	} else if (e.keyCode === 39) {
-		move(h, 10, 0);
+		move(hunter, 10, 0);
 	} else if (e.keyCode === 40) {
-		move(h, 0, 10);
+		move(hunter, 0, 10);
 	}
 	// fire weapon whilst pressed space
 	if (e.keyCode === 32) {
 		dagger = new DrawableObject('img/dagger.gif', 30, 12);
-		fire(h, dagger, 20, 0);
+		fire(hunter, dagger, 20, 0);
 	}
 }
 
