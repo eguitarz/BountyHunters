@@ -27,14 +27,40 @@ hunter.x = 200;
 hunter.y = window.innerHeight - 180;
 
 var drawPlayer;
-(drawPlayer = function() {
-	hunter.paint(player_ctx);
-	setTimeout( function() {
-		drawPlayer.call();
-	}, 33);
-})();
+// (drawPlayer = function() {
+// 	hunter.paint(player_ctx);
+// 	setTimeout( function() {
+// 		drawPlayer.call();
+// 	}, 33);
+// })();
 // h.paint(player_ctx, 200, window.innerHeight - 180, 48, 64);
-
+ 
+function RenderQueue() {
+	this.stop = false;
+	this.queue = [];
+};
+RenderQueue.prototype.push = function(drawableObject) {
+	this.queue.push(drawableObject);
+};
+RenderQueue.prototype.remove = function(drawableObject) {
+	this.queue.remove(drawableObject);
+};
+RenderQueue.prototype.run = function() {
+	var routine;
+	(routine = function() {
+		this.render();
+		if (this.stop) return;
+		setTimeout(routine, 33);
+	}.bind(this))();
+};
+RenderQueue.prototype.render = function() {
+	this.queue.forEach( function(o) {
+		o.paint();
+	});
+};
+queue = new RenderQueue;
+queue.push(hunter);
+queue.run();
 
 // functions
 function move(obj, vx, vy) {
