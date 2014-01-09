@@ -13,7 +13,7 @@ function DrawableObject(src, ctx, w, h) {
 DrawableObject.prototype.paint = function(){
 	var ctx = this.ctx;
 	ctx.save();
-	ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+	// ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 	ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
 	ctx.restore();
 }

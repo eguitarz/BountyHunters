@@ -31,9 +31,13 @@ var drawPlayer;
 function RenderQueue() {
 	this.stop = false;
 	this.queue = [];
+	this.ctxQueue = [];
 };
 RenderQueue.prototype.push = function(drawableObject) {
 	this.queue.push(drawableObject);
+};
+RenderQueue.prototype.pushCtx = function(ctx) {
+	this.ctxQueue.push(ctx);
 };
 RenderQueue.prototype.remove = function(drawableObject) {
 	q = this.queue;
@@ -51,11 +55,16 @@ RenderQueue.prototype.run = function() {
 	}.bind(this))();
 };
 RenderQueue.prototype.render = function() {
+	this.ctxQueue.forEach( function(ctx) {
+		ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+	});
 	this.queue.forEach( function(o) {
 		o.paint();
 	});
 };
 queue = new RenderQueue;
+queue.pushCtx(player_ctx);
+queue.pushCtx(weapon_ctx);
 queue.push(hunter);
 queue.run();
 
@@ -105,7 +114,6 @@ function onKeydown(e) {
 	if (e.keyCode === 32) {
 		dagger = new DrawableObject('img/dagger.gif', weapon_ctx, 30, 12);
 		trigger(queue, hunter, dagger, 20, 0);
-		trigger(queue, hunter, dagger, 30, 0);
 	}
 }
 
