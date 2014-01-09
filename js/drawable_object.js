@@ -1,7 +1,8 @@
-function DrawableObject(src, w, h) {
+function DrawableObject(src, ctx, w, h) {
 	var self = this
 	this.image = new Image(w, h);
 	this.image.src = src;
+	this.ctx = ctx;
 	this.disabled = null;
 	this.image.onload = function() {
 		self.width = this.width;
@@ -9,13 +10,15 @@ function DrawableObject(src, w, h) {
 	}
 	this.x = this.y = 0;
 };
-DrawableObject.prototype.paint = function(ctx){
+DrawableObject.prototype.paint = function(){
+	var ctx = this.ctx;
 	ctx.save();
 	ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 	ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
 	ctx.restore();
 }
-DrawableObject.prototype.loop = function(ctx, vx, vy){
+DrawableObject.prototype.loop = function(vx, vy){
+	var ctx = this.ctx;
 	ctx.save();
 	var draw;
 	(draw = function() {
