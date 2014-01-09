@@ -2,18 +2,18 @@ var bg_canvas = document.getElementById('background'),
 		bg_ctx = bg_canvas && bg_canvas.getContext('2d'),
 		player_canvas = document.getElementById('player'),
 		player_ctx = player_canvas.getContext('2d'),
-		hunter = new DrawableObject('img/hunter.png', 48, 64),
+		hunter = new DrawableObject('img/hunter.png', player_ctx, 48, 64),
 		weapon_canvas = document.getElementById('weapon'),
 		weapon_ctx = weapon_canvas.getContext('2d'),
-		bg1 = new DrawableObject('img/bg.png', window.innerWidth, window.innerHeight);
-		bg2 = new DrawableObject('img/bg.png', window.innerWidth, window.innerHeight);
+		bg1 = new DrawableObject('img/bg.png', bg_ctx, window.innerWidth, window.innerHeight);
+		bg2 = new DrawableObject('img/bg.png', bg_ctx, window.innerWidth, window.innerHeight);
 		bg2.x = window.innerWidth;
 
 if (bg_ctx) {
 	bg_ctx.canvas.width  = window.innerWidth;
 	bg_ctx.canvas.height = window.innerHeight;
-	bg1.loop(bg_ctx, -4, 0);
-	bg2.loop(bg_ctx, -4, 0);
+	bg1.loop(-4, 0);
+	bg2.loop(-4, 0);
 }
 if (player_ctx) {
 	player_ctx.canvas.width  = window.innerWidth;
@@ -35,6 +35,7 @@ var drawPlayer;
 })();
 // h.paint(player_ctx, 200, window.innerHeight - 180, 48, 64);
 
+
 // functions
 function move(obj, vx, vy) {
 	obj.x = obj.x + vx,
@@ -47,7 +48,7 @@ function fire(owner, weapon, vx, vy) {
 	(moveWeapon = function() {
 		weapon.x = weapon.x + vx;
 		weapon.y = weapon.y + vy;
-		weapon.paint(weapon_ctx);
+		weapon.paint();
 		if (weapon.x > window.innerWidth || weapon.x < weapon.width || weapon.y > window.innerHeight ||  weapon.y < weapon.height) return;
 		setTimeout( moveWeapon, 33);
 	})();
@@ -64,7 +65,7 @@ function onKeydown(e) {
 	}
 	// fire weapon whilst pressed space
 	if (e.keyCode === 32) {
-		dagger = new DrawableObject('img/dagger.gif', 30, 12);
+		dagger = new DrawableObject('img/dagger.gif', weapon_ctx, 30, 12);
 		fire(hunter, dagger, 20, 0);
 	}
 }
