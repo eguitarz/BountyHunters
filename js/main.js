@@ -100,22 +100,30 @@ function fire(owner, weapon, vx, vy) {
 		setTimeout( moveWeapon, 33);
 	})();
 }
+
+var pressedKeys = [];
 function onKeydown(e) {
-	if (e.keyCode === 37) {
+	pressedKeys[e.keyCode] = true;
+	if (pressedKeys[37]) {
 		move(hunter, -10, 0);
-	} else if (e.keyCode === 38) {
+	} else if (pressedKeys[38]) {
 		move(hunter, 0, -10);
-	} else if (e.keyCode === 39) {
+	} else if (pressedKeys[39]) {
 		move(hunter, 10, 0);
-	} else if (e.keyCode === 40) {
+	} else if (pressedKeys[40]) {
 		move(hunter, 0, 10);
 	}
 	// fire weapon whilst pressed space
-	if (e.keyCode === 32) {
+	if (pressedKeys[32]) {
 		dagger = new DrawableObject('img/dagger.gif', weapon_ctx, 30, 12);
 		trigger(queue, hunter, dagger, 20, 0);
 	}
-}
+};
+
+function onKeyup(e) {
+	pressedKeys[e.keyCode] = false;
+};
 
 // event bindings
 window.addEventListener('keydown', onKeydown, true);
+window.addEventListener('keyup', onKeyup, true);
