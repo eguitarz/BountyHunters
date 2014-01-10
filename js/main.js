@@ -66,6 +66,8 @@ queue = new RenderQueue;
 queue.pushCtx(player_ctx);
 queue.pushCtx(weapon_ctx);
 queue.push(hunter);
+queue.push(bg1);
+queue.push(bg2);
 queue.run();
 
 // functions
