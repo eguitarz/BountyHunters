@@ -1,70 +1,34 @@
-var bg_canvas = document.getElementById('background'),
-		bg_ctx = bg_canvas && bg_canvas.getContext('2d'),
-		player_canvas = document.getElementById('player'),
-		player_ctx = player_canvas.getContext('2d'),
-		hunter = new DrawableObject('img/hunter.png', player_ctx, 48, 64),
-		weapon_canvas = document.getElementById('weapon'),
-		weapon_ctx = weapon_canvas.getContext('2d'),
-		bg1 = new DrawableObject('img/bg.png', bg_ctx, window.innerWidth, window.innerHeight);
-		bg2 = new DrawableObject('img/bg.png', bg_ctx, window.innerWidth, window.innerHeight);
+var bgCanvas = document.getElementById('background'),
+		bgCtx = bgCanvas && bgCanvas.getContext('2d'),
+		playerCanvas = document.getElementById('player'),
+		playerCtx = playerCanvas.getContext('2d'),
+		hunter = new DrawableObject('img/hunter.png', playerCtx, 48, 64),
+		weaponCanvas = document.getElementById('weapon'),
+		weaponCtx = weaponCanvas.getContext('2d'),
+		bg1 = new DrawableObject('img/bg.png', bgCtx, window.innerWidth, window.innerHeight);
+		bg2 = new DrawableObject('img/bg.png', bgCtx, window.innerWidth, window.innerHeight);
 		bg2.x = window.innerWidth;
 
-if (bg_ctx) {
-	bg_ctx.canvas.width  = window.innerWidth;
-	bg_ctx.canvas.height = window.innerHeight;
+if (bgCtx) {
+	bgCtx.canvas.width  = window.innerWidth;
+	bgCtx.canvas.height = window.innerHeight;
 	bg1.loop(-4, 0);
 	bg2.loop(-4, 0);
 }
-if (player_ctx) {
-	player_ctx.canvas.width  = window.innerWidth;
-	player_ctx.canvas.height = window.innerHeight;
+if (playerCtx) {
+	playerCtx.canvas.width  = window.innerWidth;
+	playerCtx.canvas.height = window.innerHeight;
 }
-if (weapon_ctx) {
-	weapon_ctx.canvas.width  = window.innerWidth;
-	weapon_ctx.canvas.height = window.innerHeight;
+if (weaponCtx) {
+	weaponCtx.canvas.width  = window.innerWidth;
+	weaponCtx.canvas.height = window.innerHeight;
 }
 hunter.x = 200;
 hunter.y = window.innerHeight - 180;
-
-var drawPlayer;
  
-function RenderQueue() {
-	this.stop = false;
-	this.queue = [];
-	this.ctxQueue = [];
-};
-RenderQueue.prototype.push = function(drawableObject) {
-	this.queue.push(drawableObject);
-};
-RenderQueue.prototype.pushCtx = function(ctx) {
-	this.ctxQueue.push(ctx);
-};
-RenderQueue.prototype.remove = function(drawableObject) {
-	q = this.queue;
-	var idx = q.indexOf(drawableObject);
-	if (idx >= 0) {
-		q.splice(idx, 1);
-	}
-};
-RenderQueue.prototype.run = function() {
-	var routine;
-	(routine = function() {
-		this.render();
-		if (this.stop) return;
-		setTimeout(routine, 33);
-	}.bind(this))();
-};
-RenderQueue.prototype.render = function() {
-	this.ctxQueue.forEach( function(ctx) {
-		ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-	});
-	this.queue.forEach( function(o) {
-		o.paint();
-	});
-};
 queue = new RenderQueue;
-queue.pushCtx(player_ctx);
-queue.pushCtx(weapon_ctx);
+queue.pushCtx(playerCtx);
+queue.pushCtx(weaponCtx);
 queue.push(hunter);
 queue.push(bg1);
 queue.push(bg2);
@@ -117,7 +81,7 @@ function onKeydown(e) {
 	}
 	// fire weapon whilst pressed space
 	if (pressedKeys[32]) {
-		dagger = new DrawableObject('img/dagger.gif', weapon_ctx, 30, 12);
+		dagger = new DrawableObject('img/dagger.gif', weaponCtx, 30, 12);
 		trigger(queue, hunter, dagger, 20, 0);
 	}
 };
