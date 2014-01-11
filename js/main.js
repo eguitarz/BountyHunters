@@ -2,7 +2,8 @@ var bgCanvas = document.getElementById('background'),
 		bgCtx = bgCanvas && bgCanvas.getContext('2d'),
 		playerCanvas = document.getElementById('player'),
 		playerCtx = playerCanvas.getContext('2d'),
-		hunter = new DrawableObject('img/hunter.png', playerCtx, 48, 64),
+		// hunter = new DrawableObject('img/hunter.png', playerCtx, 48, 64),
+		player = new Player('img/hunter.png', playerCtx, 48, 64);
 		weaponCanvas = document.getElementById('weapon'),
 		weaponCtx = weaponCanvas.getContext('2d'),
 		bg1 = new DrawableObject('img/bg.png', bgCtx, window.innerWidth, window.innerHeight);
@@ -11,7 +12,7 @@ var bgCanvas = document.getElementById('background'),
 
 var config = {
 	start: {
-		sprites: [bg1, bg2, hunter],
+		sprites: [bg1, bg2, player],
 		init: function() {
 			bgCtx.canvas.width  = window.innerWidth;
 			bgCtx.canvas.height = window.innerHeight;
@@ -21,8 +22,8 @@ var config = {
 			playerCtx.canvas.height = window.innerHeight;
 			weaponCtx.canvas.width  = window.innerWidth;
 			weaponCtx.canvas.height = window.innerHeight;
-			hunter.x = 200;
-			hunter.y = window.innerHeight - 180;
+			player.x = 200;
+			player.y = window.innerHeight - 180;
 		}
 	},
 	ingame: {
@@ -93,18 +94,18 @@ var pressedKeys = [];
 function onKeydown(e) {
 	pressedKeys[e.keyCode] = true;
 	if (pressedKeys[37]) {
-		move(hunter, -10, 0);
+		move(player, -10, 0);
 	} else if (pressedKeys[38]) {
-		move(hunter, 0, -10);
+		move(player, 0, -10);
 	} else if (pressedKeys[39]) {
-		move(hunter, 10, 0);
+		move(player, 10, 0);
 	} else if (pressedKeys[40]) {
-		move(hunter, 0, 10);
+		move(player, 0, 10);
 	}
 	// fire weapon whilst pressed space
 	if (pressedKeys[32]) {
 		dagger = new DrawableObject('img/dagger.gif', weaponCtx, 30, 12);
-		trigger(game.renderQueue, hunter, dagger, 20, 0);
+		trigger(game.renderQueue, player, dagger, 20, 0);
 	}
 };
 
