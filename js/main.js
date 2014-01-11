@@ -2,7 +2,6 @@ var bgCanvas = document.getElementById('background'),
 		bgCtx = bgCanvas && bgCanvas.getContext('2d'),
 		playerCanvas = document.getElementById('player'),
 		playerCtx = playerCanvas.getContext('2d'),
-		// hunter = new DrawableObject('img/hunter.png', playerCtx, 48, 64),
 		player = new Player('img/hunter.png', playerCtx, 48, 64);
 		weaponCanvas = document.getElementById('weapon'),
 		weaponCtx = weaponCanvas.getContext('2d'),
@@ -52,6 +51,9 @@ Game.prototype.init = function(config) {
 	}.bind(this) );
 	this.renderQueue.run();
 	config[this.state].init();
+
+	var t = new Player('img/hunter.png', playerCtx, 48, 64);
+	this.renderQueue.animate(t, {x: 300, y: 300}, {x: 500, y:300}, 1000);
 };
 
 var game = new Game;
