@@ -13,20 +13,14 @@ var config = {
 	start: {
 		sprites: [bg1, bg2, hunter],
 		init: function() {
-			if (bgCtx) {
-				bgCtx.canvas.width  = window.innerWidth;
-				bgCtx.canvas.height = window.innerHeight;
-				bg1.loop(-4, 0);
-				bg2.loop(-4, 0);
-			}
-			if (playerCtx) {
-				playerCtx.canvas.width  = window.innerWidth;
-				playerCtx.canvas.height = window.innerHeight;
-			}
-			if (weaponCtx) {
-				weaponCtx.canvas.width  = window.innerWidth;
-				weaponCtx.canvas.height = window.innerHeight;
-			}
+			bgCtx.canvas.width  = window.innerWidth;
+			bgCtx.canvas.height = window.innerHeight;
+			bg1.loop(-4, 0);
+			bg2.loop(-4, 0);
+			playerCtx.canvas.width  = window.innerWidth;
+			playerCtx.canvas.height = window.innerHeight;
+			weaponCtx.canvas.width  = window.innerWidth;
+			weaponCtx.canvas.height = window.innerHeight;
 			hunter.x = 200;
 			hunter.y = window.innerHeight - 180;
 		}
@@ -61,31 +55,6 @@ Game.prototype.init = function(config) {
 
 var game = new Game;
 game.init(config);
-
-// if (bgCtx) {
-// 	bgCtx.canvas.width  = window.innerWidth;
-// 	bgCtx.canvas.height = window.innerHeight;
-// 	bg1.loop(-4, 0);
-// 	bg2.loop(-4, 0);
-// }
-// if (playerCtx) {
-// 	playerCtx.canvas.width  = window.innerWidth;
-// 	playerCtx.canvas.height = window.innerHeight;
-// }
-// if (weaponCtx) {
-// 	weaponCtx.canvas.width  = window.innerWidth;
-// 	weaponCtx.canvas.height = window.innerHeight;
-// }
-// hunter.x = 200;
-// hunter.y = window.innerHeight - 180;
- 
-// queue = new RenderQueue;
-// queue.pushCtx(playerCtx);
-// queue.pushCtx(weaponCtx);
-// queue.push(hunter);
-// queue.push(bg1);
-// queue.push(bg2);
-// queue.run();
 
 // functions
 function move(obj, vx, vy) {
