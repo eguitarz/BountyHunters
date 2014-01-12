@@ -40,6 +40,7 @@ function Game() {
 	this.renderQueue = new RenderQueue;
 };
 
+var t = null;
 Game.prototype.init = function(config) {
 	var sprites = config[this.state].sprites;
 	var ctxes = config.ctxes;
@@ -52,7 +53,7 @@ Game.prototype.init = function(config) {
 	this.renderQueue.run();
 	config[this.state].init();
 
-	var t = new Player('img/hunter.png', playerCtx, 48, 64);
+	t = new Player('img/hunter.png', playerCtx, 48, 64);
 	this.renderQueue.animate(t, {x: 300, y: 300}, {x: 500, y:300}, 1000);
 };
 
