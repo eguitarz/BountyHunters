@@ -46,6 +46,9 @@ DrawableObject.prototype.isCollided = function(drawableObject) {
 	var isCollided = false;
 	isCollided = [p1, p2, p3, p4].some(function(p) {
 		if (p.x >= o1.x && p.x <= o4.x && p.y >= o1.y && p.y <= o4.y) {return true;}
+	}) || [o1, o2, o3, o4].some(function(o) {
+		if (o.x >= p1.x && o.x <= p4.x && o.y >= p1.y && p.y <= p4.y) {return true;}
 	});
+
 	return isCollided;
 };
