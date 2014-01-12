@@ -33,3 +33,18 @@ DrawableObject.prototype.loop = function(vx, vy){
 	}.bind(this) )();
 	ctx.restore();
 };
+DrawableObject.prototype.isCollided = function(drawableObject) {
+	var p1 = {x:drawableObject.x, y:drawableObject.y},
+			p2 = {x:drawableObject.x + drawableObject.width, y:drawableObject.y},
+			p3 = {x:drawableObject.x, y:drawableObject.y + drawableObject.height},
+			p4 = {x:drawableObject.x + drawableObject.width, y:drawableObject.y + drawableObject.height},
+			o1 = {x:this.x, y:this.y},
+			o2 = {x:this.x + this.width, y:this.y},
+			o3 = {x:this.x, y:this.y + this.height},
+			o4 = {x:this.x + this.width, y:this.y + this.height};
+
+	[p1, p2, p3, p4].forEach(function(p) {
+		if (p.x >= o1.x && p.x <= o2.x && p.y >= o1.y && p.y <= o2.y) return true;
+	});
+	return false;
+};
