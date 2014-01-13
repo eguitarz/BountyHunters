@@ -57,6 +57,10 @@ Game.prototype.init = function(config) {
 	this.renderQueue.animate(t, {x: 300, y: 300}, {x: 500, y:300}, 1000);
 };
 
+Game.prototype.run = function() {
+
+};
+
 var game = new Game;
 game.init(config);
 
