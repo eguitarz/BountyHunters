@@ -38,6 +38,7 @@ function Game() {
 	this.states = ['start', 'ingame', 'end'];
 	this.state = 'start';
 	this.renderQueue = new RenderQueue;
+	this.collisionQueue = [];
 };
 
 var t = null;
@@ -52,6 +53,7 @@ Game.prototype.init = function(config) {
 	}.bind(this) );
 	this.renderQueue.run();
 	config[this.state].init();
+	this.collisionQueue.push(player);
 
 	t = new Player('img/hunter.png', playerCtx, 48, 64);
 	this.renderQueue.animate(t, {x: 300, y: 300}, {x: 500, y:300}, 1000);
@@ -77,6 +79,12 @@ function trigger(queue, owner, weapon, vx, vy) {
 	(moveWeapon = function() {
 		weapon.x = weapon.x + vx;
 		weapon.y = weapon.y + vy;
+		game.collisionQueue.forEach( function(o) {
+			if ( o.isCollided(weapon) ) {
+				o.onCollision();
+				weapon.onCollision();
+			}
+		});
 		if (weapon.x > window.innerWidth || weapon.x < weapon.width || weapon.y > window.innerHeight ||  weapon.y < weapon.height) {
 			queue.remove(weapon);
 			return;
