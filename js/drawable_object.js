@@ -33,6 +33,9 @@ DrawableObject.prototype.loop = function(vx, vy){
 	}.bind(this) )();
 	ctx.restore();
 };
+DrawableObject.prototype.onCollision = function() {
+	console.log(this+' on collision');
+}
 DrawableObject.prototype.isCollided = function(drawableObject) {
 	var o1 = {x:drawableObject.x, y:drawableObject.y},
 			o2 = {x:drawableObject.x + drawableObject.width, y:drawableObject.y},
@@ -47,7 +50,7 @@ DrawableObject.prototype.isCollided = function(drawableObject) {
 	isCollided = [p1, p2, p3, p4].some(function(p) {
 		if (p.x >= o1.x && p.x <= o4.x && p.y >= o1.y && p.y <= o4.y) {return true;}
 	}) || [o1, o2, o3, o4].some(function(o) {
-		if (o.x >= p1.x && o.x <= p4.x && o.y >= p1.y && p.y <= p4.y) {return true;}
+		if (o.x >= p1.x && o.x <= p4.x && o.y >= p1.y && o.y <= p4.y) {return true;}
 	});
 
 	return isCollided;
