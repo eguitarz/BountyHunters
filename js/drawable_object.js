@@ -5,16 +5,20 @@ function DrawableObject(src, ctx, w, h) {
 	this.ctx = ctx;
 	this.disabled = null;
 	this.image.onload = function() {
-		self.width = this.width;
-		self.height = this.height;
+		self.width = self.swidth = this.width;
+		self.height = self.sheight = this.height;
 	}
-	this.x = this.y = 0;
+	this.sx = this.sy =this.x = this.y = 0;
 };
 DrawableObject.prototype.paint = function(){
 	var ctx = this.ctx;
 	ctx.save();
 	// ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-	ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+	if (this.isClipped) {
+		ctx.drawImage(this.image, this.sx, this.sy, this.swidth, this.sheight, this.x, this.y, this.width, this.height);
+	} else {
+		ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+	}
 	ctx.restore();
 }
 DrawableObject.prototype.loop = function(vx, vy){

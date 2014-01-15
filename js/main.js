@@ -3,6 +3,7 @@ var bgCanvas = document.getElementById('background'),
 		playerCanvas = document.getElementById('player'),
 		playerCtx = playerCanvas.getContext('2d'),
 		player = new Player('img/hunter.png', playerCtx, 48, 64);
+		monster = new DrawableObject('img/skeleton.gif', playerCtx, 48, 50);
 		weaponCanvas = document.getElementById('weapon'),
 		weaponCtx = weaponCanvas.getContext('2d'),
 		bg1 = new DrawableObject('img/bg.png', bgCtx, window.innerWidth, window.innerHeight);
@@ -11,7 +12,7 @@ var bgCanvas = document.getElementById('background'),
 
 var config = {
 	start: {
-		sprites: [bg1, bg2, player],
+		sprites: [bg1, bg2, player, monster],
 		init: function() {
 			bgCtx.canvas.width  = window.innerWidth;
 			bgCtx.canvas.height = window.innerHeight;
@@ -23,6 +24,10 @@ var config = {
 			weaponCtx.canvas.height = window.innerHeight;
 			player.x = 200;
 			player.y = window.innerHeight - 180;
+			monster.x = 600;
+			monster.y = window.innerHeight - 180;
+			monster.isClipped = true;
+			monster.sheight = 50;
 		}
 	},
 	ingame: {
