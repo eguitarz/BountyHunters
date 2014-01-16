@@ -28,6 +28,11 @@ var config = {
 			monster.y = window.innerHeight - 180;
 			monster.isClipped = true;
 			monster.sheight = 50;
+			monster.onCollision = function() {
+				console.log('monster on collision!!!');
+				this.isDrawable = false;
+			};
+			console.log(monster);
 		}
 	},
 	ingame: {
@@ -59,6 +64,7 @@ Game.prototype.init = function(config) {
 	this.renderQueue.run();
 	config[this.state].init();
 	this.collisionQueue.push(player);
+	this.collisionQueue.push(monster);
 
 	t = new Player('img/hunter.png', playerCtx, 48, 64);
 	this.renderQueue.animate(t, {x: 300, y: 300}, {x: 500, y:300}, 1000);
@@ -77,7 +83,7 @@ function move(obj, vx, vy) {
 	obj.y = obj.y + vy;
 }
 function trigger(queue, owner, weapon, vx, vy) {
-	weapon.x = owner.x;
+	weapon.x = owner.x + owner.width + 1;
 	weapon.y = owner.y;
 	queue.push(weapon);
 	var moveWeapon;
