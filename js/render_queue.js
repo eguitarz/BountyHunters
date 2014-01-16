@@ -25,9 +25,15 @@ RenderQueue.prototype.run = function() {
 	}.bind(this))();
 };
 RenderQueue.prototype.render = function() {
+	var self = this;
 	this.ctxQueue.forEach( function(ctx) {
 		ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 	});
+	// removing round
+	this.queue.forEach( function(o) {
+		if (!o.isDrawable) self.remove(o);
+	});
+	// drawing round
 	this.queue.forEach( function(o) {
 		o.paint();
 	});
