@@ -3,6 +3,7 @@ function DrawableObject(src, ctx, w, h) {
 	this.image = new Image(w, h);
 	this.image.src = src;
 	this.ctx = ctx;
+	this.isDrawable = true;
 	this.disabled = null;
 	this.image.onload = function() {
 		self.width = self.swidth = this.width;
