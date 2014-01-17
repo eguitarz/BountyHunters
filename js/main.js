@@ -103,18 +103,6 @@ function trigger(queue, owner, weapon, vx, vy) {
 		setTimeout( moveWeapon, 33);
 	})();
 }
-function fire(owner, weapon, vx, vy) {
-	weapon.x = owner.x;
-	weapon.y = owner.y;
-	var moveWeapon;
-	(moveWeapon = function() {
-		weapon.x = weapon.x + vx;
-		weapon.y = weapon.y + vy;
-		weapon.paint();
-		if (weapon.x > window.innerWidth || weapon.x < weapon.width || weapon.y > window.innerHeight ||  weapon.y < weapon.height) return;
-		setTimeout( moveWeapon, 33);
-	})();
-}
 
 var pressedKeys = [];
 function onKeydown(e) {
