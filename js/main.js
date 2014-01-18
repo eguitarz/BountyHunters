@@ -51,7 +51,6 @@ function Game() {
 	this.collisionQueue = [];
 };
 
-var t = null;
 Game.prototype.init = function(config) {
 	var sprites = config[this.state].sprites;
 	var ctxes = config.ctxes;
