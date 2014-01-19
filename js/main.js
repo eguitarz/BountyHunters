@@ -64,9 +64,6 @@ Game.prototype.init = function(config) {
 	config[this.state].init();
 	this.collisionQueue.push(player);
 	this.collisionQueue.push(monster);
-
-	t = new Player('img/hunter.png', playerCtx, 48, 64);
-	this.renderQueue.animate(t, {x: 300, y: 300}, {x: 500, y:300}, 1000);
 };
 
 Game.prototype.run = function() {
