@@ -60,14 +60,16 @@ Game.prototype.init = function(config) {
 	ctxes && ctxes.forEach( function(ctx) {
 		this.renderQueue.pushCtx(ctx);
 	}.bind(this) );
-	this.renderQueue.run();
+	
 	config[this.state].init();
 	this.collisionQueue.push(player);
 	this.collisionQueue.push(monster);
+
+	this.run();
 };
 
 Game.prototype.run = function() {
-
+	this.renderQueue.run();
 };
 
 var game = new Game;
