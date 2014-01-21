@@ -17,12 +17,7 @@ RenderQueue.prototype.remove = function(drawableObject) {
 	}
 };
 RenderQueue.prototype.run = function() {
-	var routine;
-	(routine = function() {
-		this.render();
-		if (this.stop) return;
-		setTimeout(routine, 33);
-	}.bind(this))();
+	this.render();
 };
 RenderQueue.prototype.render = function() {
 	var self = this;
