@@ -69,7 +69,11 @@ Game.prototype.init = function(config) {
 };
 
 Game.prototype.run = function() {
-	this.renderQueue.run();
+	var handler;
+	(handler = function() {
+		this.renderQueue.run();
+		setTimeout( handler, 33 );
+	}.bind(this))();
 };
 
 var game = new Game;
