@@ -52,6 +52,16 @@ function Game() {
 };
 
 Game.prototype.init = function(config) {
+	this.loadSpritesFromConfig(config);
+
+	config[this.state].init();
+	this.collisionQueue.push(player);
+	this.collisionQueue.push(monster);
+
+	this.run();
+};
+
+Game.prototype.loadSpritesFromConfig = function(config) {
 	var sprites = config[this.state].sprites;
 	var ctxes = config.ctxes;
 	sprites && sprites.forEach( function(sprite) {
@@ -60,12 +70,6 @@ Game.prototype.init = function(config) {
 	ctxes && ctxes.forEach( function(ctx) {
 		this.renderQueue.pushCtx(ctx);
 	}.bind(this) );
-	
-	config[this.state].init();
-	this.collisionQueue.push(player);
-	this.collisionQueue.push(monster);
-
-	this.run();
 };
 
 Game.prototype.run = function() {
