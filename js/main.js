@@ -53,10 +53,8 @@ function Game() {
 
 Game.prototype.init = function(config) {
 	this.loadSpritesFromConfig(config);
-
 	config[this.state].init();
-	this.collisionQueue.push(player);
-	this.collisionQueue.push(monster);
+	this.loadCollision();
 
 	this.run();
 };
@@ -71,6 +69,11 @@ Game.prototype.loadSpritesFromConfig = function(config) {
 		this.renderQueue.pushCtx(ctx);
 	}.bind(this) );
 };
+
+Game.prototype.loadCollision = function() {
+	this.collisionQueue.push(player);
+	this.collisionQueue.push(monster);
+}
 
 Game.prototype.run = function() {
 	var handler;
